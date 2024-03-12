@@ -1,0 +1,29 @@
+server {
+    listen 80;
+    server_name local.systema.com;
+    root C:/www/modelo-sistema-php/vendor;
+
+    location /app {
+        alias C:/www/modelo-sistema-php/app;
+        try_files $uri $uri/ /public/index.php$is_args$args;
+    }
+
+    location /vendor {
+        alias C:/www/modelo-sistema-php/vendor;
+        try_files $uri $uri/ /public/index.php$is_args$args;
+    }
+
+    location /auth {
+        alias C:/www/modelo-sistema-php/auth;
+        try_files $uri $uri/ /public/index.php$is_args$args;
+    }
+
+    location / {
+        try_files $uri $uri/ /public/index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock; # ajuste conforme a configuração do seu PHP-FPM
+    }
+}

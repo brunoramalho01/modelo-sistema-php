@@ -1,0 +1,40 @@
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100),
+    cpf VARCHAR(11) UNIQUE,
+    usuario VARCHAR(50) UNIQUE,
+    senha VARCHAR(255), -- Guarde sempre senhas criptografadas
+    perfil_id INT,
+    FOREIGN KEY (perfil_id) REFERENCES perfis(id)
+);
+
+CREATE TABLE perfis (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50) UNIQUE
+);
+
+CREATE TABLE menus (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(50) UNIQUE
+);
+
+CREATE TABLE permissoes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    perfil_id INT,
+    menu_id INT,
+    FOREIGN KEY (perfil_id) REFERENCES perfis(id),
+    FOREIGN KEY (menu_id) REFERENCES menus(id)
+);
+
+-- Exemplo de dados
+INSERT INTO perfis (nome) VALUES ('administrador'), ('usuario_comum');
+
+INSERT INTO menus (nome) VALUES ('Dashboard'), ('Configurações'), ('Usuários'), ('Relatórios');
+
+INSERT INTO permissoes (perfil_id, menu_id) VALUES
+(1, 1), (1, 2), (1, 3), (1, 4),  -- Administrador tem acesso a todos os menus
+(2, 1), (2, 2);  -- Usuário comum tem acesso apenas ao Dashboard e Configurações
+
+-- OBS: a tabela usuarios está relacionada à tabela perfis através do campo perfil_id. A tabela perfis está relacionada à tabela menus através da tabela permissoes, que indica quais menus estão associados a cada perfil de usuário.
+
+-- Quando um usuário faz login, você consulta o perfil dele na tabela usuarios e, em seguida, usa esse perfil para determinar quais menus ele pode acessar, consultando a tabela permissoes.

@@ -1,0 +1,28 @@
+<VirtualHost *:80>
+    ServerAdmin webmaster@local.systema.com
+    DocumentRoot "C:/xampp/htdocs/modelo-sistema-php/public"
+    ServerName local.systema.com
+    ErrorLog "logs/local.systema.com-error.log"
+    CustomLog "logs/local.systema.com--access.log" common
+
+    Alias "/app" "C:/xampp/htdocs/modelo-sistema-php/app"
+    <Directory "C:/xampp/htdocs/modelo-sistema-php/app">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require local
+    </Directory>
+
+    Alias "/vendor" "C:/xampp/htdocs/modelo-sistema-php/vendor"
+    <Directory "C:/xampp/htdocs/modelo-sistema-php/vendor">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require local
+    </Directory>
+
+    Alias "/auth" "C:/xampp/htdocs/modelo-sistema-php/auth"
+    <Directory "C:/xampp/htdocs/modelo-sistema-php/auth">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require local
+    </Directory>
+</VirtualHost>
